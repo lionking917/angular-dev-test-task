@@ -32,19 +32,10 @@ export class FirebaseService {
 			messagingSenderId: '978693463659',
 			appId: '1:978693463659:web:7aa38253892da9c0b15b2e',
 		});
+	}
 
-		// Example
-		this._firestore.collection(`${ CRYPTO_CURRENCIES_PRICES_COLLECTION_NAME }/BTC/prices`).onSnapshot({
-			next(snapshot) {
-				console.warn(snapshot.docChanges().map(change => ({
-					 timestamp: change.doc.id,
-					...change.doc.data(),
-				})));
-			},
-		});
-
-		// Example
-		setTimeout(() => void this.turnOnRealtimeCryptoCurrencyPrices('BTC'), 2000);
+	getCollection(cryptoCurrencyCode: CryptoCurrencyCode): firebase.firestore.CollectionReference<firebase.firestore.DocumentData> {
+		return this._firestore.collection(`${ CRYPTO_CURRENCIES_PRICES_COLLECTION_NAME }/${ cryptoCurrencyCode }/prices`);
 	}
 
 	turnOnRealtimeCryptoCurrencyPrices(cryptoCurrencyCode: CryptoCurrencyCode): void {
