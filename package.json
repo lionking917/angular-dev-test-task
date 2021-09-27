@@ -36,9 +36,11 @@
 		"@angular/platform-browser-dynamic": "12.2.5",
 		"@angular/router": "12.2.5",
 		"@nrwl/angular": "12.9.0",
+		"chart.js": "2.9.3",
 		"firebase": "8.4.1",
+		"ng2-charts": "2.3.0",
 		"rxjs": "7.3.0",
-		"tslib": "2.3.1",
+		"tslib": "^2.3.1",
 		"zone.js": "0.11.4"
 	},
 	"devDependencies": {
@@ -60,7 +62,6 @@
 		"@typescript-eslint/parser": "4.31.0",
 		"cypress": "8.3.1",
 		"dotenv": "10.0.0",
-		"husky": "7.0.2",
 		"eslint": "7.32.0",
 		"eslint-config-prettier": "8.3.0",
 		"eslint-plugin-cypress": "2.11.3",
@@ -69,11 +70,12 @@
 		"eslint-plugin-rxjs": "3.3.7",
 		"eslint-plugin-rxjs-angular": "1.0.6",
 		"eslint-plugin-unicorn": "36.0.0",
+		"husky": "7.0.2",
+		"lint-staged": "11.1.2",
 		"ng-packagr": "12.2.1",
 		"prettier": "2.4.0",
-		"ts-node": "10.2.1",
 		"shx": "0.3.3",
-		"lint-staged": "11.1.2",
+		"ts-node": "10.2.1",
 		"typescript": "4.4.3"
 	}
 }
