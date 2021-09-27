@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 
+import type { Option } from '../../types';
+
 @Component({
 	selector: 'bp-custom-select',
 	templateUrl: './custom-select.component.html',
@@ -7,7 +9,7 @@ import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from 
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomSelectComponent {
-	@Input() options: any;
+	@Input() options: Option[] = [];
 
 	@Input() selectedValue = '';
 

@@ -5,16 +5,9 @@ import { CRYPTO_CURRENCY_CODES_AND_NAMES } from '@bp/shared-models';
 
 import { FirebaseService } from '../services';
 
-const N = 10;
+import { QUERY_LIMIT } from './constants';
+import type { Option, Coordinate, FDocumentChange } from './types';
 
-type Option = {
-	label: string;
-	value: string;
-};
-type CryptoCurrencyItem = {
-	label: string;
-	data: number[];
-};
 @Component({
 	selector: 'bp-root',
 	templateUrl: './app.component.html',
@@ -24,7 +17,7 @@ type CryptoCurrencyItem = {
 export class AppComponent {
 	title = 'line-chart';
 
-	cryptoCurrencyData: CryptoCurrencyItem[] = [];
+	cryptoCurrencyData: Coordinate [] = [];
 
 	options: Option[] = [];
 
@@ -33,14 +26,18 @@ export class AppComponent {
 	unSubscribe: () => void = () => null;
 
 	constructor(public firebase: FirebaseService, public cdr: ChangeDetectorRef) {
+		this.getOptions();
+
+		this.changeCryptoCurrencyData(this.selectedCurrency);
+	}
+
+	getOptions(): void {
 		Object.entries(CRYPTO_CURRENCY_CODES_AND_NAMES).forEach(([ key, value ]) => {
 			this.options.push({
 				label: value,
 				value: key,
 			});
 		});
-
-		this.changeCryptoCurrencyData(this.selectedCurrency);
 	}
 
 	selectChange(value: CryptoCurrencyCode): void {
@@ -50,28 +47,24 @@ export class AppComponent {
 	}
 
 	changeCryptoCurrencyData(value: CryptoCurrencyCode): void {
-		this.cryptoCurrencyData = [{
-			data: [],
-			label: value,
-		}];
+		this.cryptoCurrencyData = [];
 
 		this.unSubscribe();
 
-		this.unSubscribe = this.firebase.getCollection(value).limit(N)
+		this.unSubscribe = this.firebase.getCollection(value).limit(QUERY_LIMIT)
 			.onSnapshot(snapshot => {
-				const changes = snapshot.docChanges()
+				const changes: FDocumentChange[] = snapshot.docChanges()
 					.map(change => ({
 				 		timestamp: change.doc.id,
 						...change.doc.data(),
 					}));
 
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
-				const data = changes.map((item: any) => item.price);
+				const data = changes.map((item: FDocumentChange) => ({
+					x: Number(item.timestamp),
+					y: Number(item.price),
+				}));
 
-				this.cryptoCurrencyData = [{
-					data,
-					label: value,
-				}];
+				this.cryptoCurrencyData = data;
 
 				this.cdr.detectChanges();
 			});

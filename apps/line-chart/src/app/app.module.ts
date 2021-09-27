@@ -1,5 +1,3 @@
-import { ChartsModule } from 'ng2-charts';
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -10,7 +8,7 @@ import { CustomSelectComponent } from './components/custom-select/custom-select.
 
 @NgModule({
 	declarations: [ AppComponent, CustomChartComponent, CustomSelectComponent ],
-	imports: [ BrowserModule, ChartsModule, FormsModule ],
+	imports: [ BrowserModule, FormsModule ],
 	providers: [],
 	bootstrap: [ AppComponent ],
 })
